@@ -1,0 +1,23 @@
+{
+  "whatsappNumber": "919846012345",
+  "displayPhone": "+91 98460 12345",
+  "email": "sales@alliedcochin.com",
+  "address": "Mukkadackal Buildings,\nHill Palace Rd, Thrippunithura,\nKochi, Kerala 682301",
+  "hours": "10:00 AM – 7:00 PM",
+  "days": "Mon — Sat",
+  "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.843463094383!2d76.34906435714718!3d9.946979262202058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b08736fb5d50c73%3A0xe4a9dbcb890ad55f!2sAllied%20Agencies%20Cochin!5e0!3m2!1sen!2sin!4v1769162231967",
+  "social": {
+    "facebook": "https://facebook.com/alliedcochin",
+    "instagram": "https://instagram.com/alliedcochin",
+    "linkedin": "https://linkedin.com/company/alliedcochin"
+  },
+  "businessHours": {
+    "monday": "10:00 AM - 7:00 PM",
+    "tuesday": "10:00 AM - 7:00 PM",
+    "wednesday": "10:00 AM - 7:00 PM",
+    "thursday": "10:00 AM - 7:00 PM",
+    "friday": "10:00 AM - 7:00 PM",
+    "saturday": "10:00 AM - 7:00 PM",
+    "sunday": "Closed"
+  }
+}

@@ -1,0 +1,23 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://yourusername.github.io/your-repo-name/sitemap.xml
+
+# Google AdsBot - Allow crawling
+User-agent: AdsBot-Google
+Allow: /
+
+# Googlebot - Allow crawling
+User-agent: Googlebot
+Allow: /
+
+# Bingbot - Allow crawling
+User-agent: bingbot
+Allow: /
+
+# Yandex - Allow crawling
+User-agent: Yandex
+Allow: /
+
+# Sitemap location
+Sitemap: https://yourusername.github.io/your-repo-name/sitemap.xml

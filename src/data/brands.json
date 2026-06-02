@@ -1,0 +1,42 @@
+[
+  {
+    "id": "kirloskar",
+    "name": "Kirloskar",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Kirloskar_Group_Logo.svg/2560px-Kirloskar_Group_Logo.svg.png",
+    "description": "Premium industrial pumps and engineering solutions",
+    "featured": true,
+    "website": "https://kirloskar.com"
+  },
+  {
+    "id": "v-guard",
+    "name": "V-Guard",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/V-Guard_Industries_Logo.svg/2048px-V-Guard_Industries_Logo.svg.png",
+    "description": "Reliable water pumps and electrical solutions",
+    "featured": true,
+    "website": "https://v-guard.in"
+  },
+  {
+    "id": "texmo",
+    "name": "Texmo",
+    "logo": "https://texmo.com/wp-content/uploads/2021/03/texmo-logo.png",
+    "description": "High-quality pumps for various applications",
+    "featured": true,
+    "website": "https://texmo.com"
+  },
+  {
+    "id": "cri-pumps",
+    "name": "CRI Pumps",
+    "logo": "https://www.cripumps.com/wp-content/uploads/2021/03/cri-logo.png",
+    "description": "Advanced pumping solutions for industries",
+    "featured": true,
+    "website": "https://cripumps.com"
+  },
+  {
+    "id": "lubi",
+    "name": "Lubi",
+    "logo": "https://lubipumps.com/wp-content/uploads/2021/03/lubi-logo.png",
+    "description": "Efficient and durable pump systems",
+    "featured": true,
+    "website": "https://lubipumps.com"
+  }
+]
