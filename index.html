@@ -26,6 +26,42 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1600&q=70" as="image">
     
+    <!-- Structured Data (JSON-LD LocalBusiness Schema) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Allied Agencies Cochin",
+      "image": "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80",
+      "telephone": "+919495977454",
+      "email": "sales@alliedcochin.com",
+      "url": "https://www.alliedcochin.com",
+      "hasMap": "https://www.google.com/maps/place/Allied+Agencies+Cochin/@9.9469793,76.3490644,17z",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Mukkadackal Buildings, Hill Palace Rd",
+        "addressLocality": "Thrippunithura",
+        "addressRegion": "Kerala",
+        "postalCode": "682301",
+        "addressCountry": "IN"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "10:00",
+          "closes": "19:00"
+        }
+      ],
+      "sameAs": [
+        "https://facebook.com/alliedcochin",
+        "https://instagram.com/alliedcochin",
+        "https://linkedin.com/company/alliedcochin"
+      ],
+      "priceRange": "₹₹"
+    }
+    </script>
+
     <!-- Project Stylesheet -->
     <link rel="stylesheet" href="src/css/style.css">
     
@@ -52,7 +88,7 @@
                 </ul>
                 
                 <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open mobile navigation drawer" aria-expanded="false" aria-controls="mobile-menu">
-                    <svg viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                 </button>
@@ -63,7 +99,7 @@
     <!-- Mobile Navigation Overlay Drawer -->
     <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
         <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close mobile navigation drawer">
-            <svg viewBox="0 0 24 24">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
         </button>
@@ -75,8 +111,8 @@
     </div>
 
     <!-- WhatsApp Floating Action Button Widget -->
-    <a href="https://wa.me/919846012345" class="whatsapp-float" id="whatsapp-float-widget" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
-        <svg viewBox="0 0 24 24">
+    <a href="https://wa.me/919495977454" class="whatsapp-float" id="whatsapp-float-widget" target="_blank" rel="noopener noreferrer" aria-label="Chat with Allied Agencies on WhatsApp">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.063-1.03-.069-.232-.08-1.034-.404-1.956-1.223-.719-.637-1.203-1.427-1.345-1.667-.142-.24-.015-.371.106-.49.109-.107.24-.282.361-.421.121-.14.161-.24.241-.401.081-.162.04-.303-.02-.422s-.524-1.262-.718-1.73c-.19-.459-.382-.396-.525-.404l-.447-.008c-.154 0-.405.058-.616.288-.212.23-.807.788-.807 1.921 0 1.133.824 2.226.938 2.384.115.157 1.623 2.478 3.931 3.477.549.238.977.38 1.312.487.551.175 1.053.15 1.45.09.444-.066 1.366-.559 1.557-1.097.19-.539.19-1.001.134-1.097-.057-.096-.207-.152-.444-.271zM12 2.182C6.585 2.182 2.182 6.585 2.182 12c0 1.833.502 3.553 1.374 5.027l-1.45 5.305 5.441-1.427A9.762 9.762 0 0012 21.818c5.415 0 9.818-4.403 9.818-9.818s-4.403-9.818-9.818-9.818zM12 20c-1.554 0-3.047-.406-4.35-1.176l-.312-.184-3.232.848.862-3.15-.202-.322A7.947 7.947 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
         </svg>
     </a>
@@ -97,7 +133,11 @@
             <div class="container">
                 <div class="about-content">
                     <div class="about-image reveal">
-                        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=700&q=50" alt="Industrial Pump Installation" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=700&q=50" 
+                             alt="Industrial Water Pump Installation" 
+                             width="700" 
+                             height="467" 
+                             loading="lazy">
                     </div>
                     <div class="about-text reveal">
                         <span class="section-subtitle">Our Legacy</span>
@@ -178,25 +218,27 @@
                     <div class="contact-card reveal" id="contact-card-address">
                         <h3>Office Address</h3>
                         <address id="contact-address" class="contact-info">
-                            <!-- Hydrated dynamically -->
+                            Mukkadackal Buildings,<br>
+                            Hill Palace Rd, Thrippunithura,<br>
+                            Kochi, Kerala 682301
                         </address>
                     </div>
                     
                     <div class="contact-card reveal" id="contact-card-phone">
                         <h3>Customer Care</h3>
-                        <a href="tel:+919846012345" id="contact-phone" class="contact-info" style="font-size: 1.25rem; font-weight: 700; color: var(--white); display: block; margin-bottom: 8px; text-decoration: none;">
-                            <!-- Hydrated dynamically -->
+                        <a href="tel:+919495977454" id="contact-phone" class="contact-info" style="font-size: 1.25rem; font-weight: 700; color: var(--white); display: block; margin-bottom: 8px; text-decoration: none;">
+                            +91 94959 77454
                         </a>
                         <a href="mailto:sales@alliedcochin.com" id="contact-email" class="contact-info" style="text-decoration: none;">
-                            <!-- Hydrated dynamically -->
+                            sales@alliedcochin.com
                         </a>
                     </div>
                     
                     <div class="contact-card reveal" id="contact-card-hours">
                         <h3>Store Hours</h3>
-                        <span id="contact-days" class="contact-hours"></span>
+                        <span id="contact-days" class="contact-hours">Mon — Sat</span>
                         <p id="contact-hours" class="contact-info" style="font-size: 1.2rem; font-weight: 700; color: var(--white);">
-                            <!-- Hydrated dynamically -->
+                            10:00 AM – 7:00 PM
                         </p>
                     </div>
                 </div>
@@ -209,7 +251,7 @@
                     </div>
                     <iframe 
                         id="contact-map"
-                        src="" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.843463094383!2d76.34906435714718!3d9.946979262202058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b08736fb5d50c73%3A0xe4a9dbcb890ad55f!2sAllied%20Agencies%20Cochin!5e0!3m2!1sen!2sin!4v1769162231967" 
                         allowfullscreen 
                         loading="lazy"
                         title="Allied Agencies Cochin Store Location Map">
@@ -223,9 +265,10 @@
     <!-- Footer Section -->
     <footer>
         <div class="container">
-            <p>&copy; <span id="year"></span> Allied Agencies Cochin. All rights reserved. Since 1973.</p>
+            <p>&copy; <span id="year">2026</span> Allied Agencies Cochin. All rights reserved. Since 1973.</p>
         </div>
     </footer>
 
 </body>
 </html>
+
