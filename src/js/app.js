@@ -102,8 +102,8 @@ const FALLBACK_BRANDS = [
 ];
 
 const FALLBACK_CONTACT = {
-    "whatsappNumber": "919846012345",
-    "displayPhone": "+91 98460 12345",
+    "whatsappNumber": "919495977454",
+    "displayPhone": "+91 94959 77454",
     "email": "sales@alliedcochin.com",
     "address": "Mukkadackal Buildings,\nHill Palace Rd, Thrippunithura,\nKochi, Kerala 682301",
     "hours": "10:00 AM – 7:00 PM",
@@ -117,22 +117,10 @@ let brands = [];
 let contact = {};
 
 /**
- * Hydrates data from remote JSON files or falls back gracefully
+ * Hydrates data from local JSON files with graceful fallback
  */
 async function loadData() {
     try {
-        const savedProducts = localStorage.getItem('products');
-        const savedBrands = localStorage.getItem('brands');
-        const savedContact = localStorage.getItem('contact');
-
-        if (savedProducts && savedBrands && savedContact) {
-            products = JSON.parse(savedProducts);
-            brands = JSON.parse(savedBrands);
-            contact = JSON.parse(savedContact);
-            console.log('Loaded custom data from localStorage.');
-            return;
-        }
-
         const [productsRes, brandsRes, contactRes] = await Promise.all([
             fetch('src/data/products.json'),
             fetch('src/data/brands.json'),
@@ -143,12 +131,12 @@ async function loadData() {
             products = await productsRes.json();
             brands = await brandsRes.json();
             contact = await contactRes.json();
-            console.log('Loaded data from JSON sources.');
+            console.log('Loaded live data from JSON files.');
         } else {
-            throw new Error('JSON load failed. HTTP status error.');
+            throw new Error('One or more JSON files failed to load.');
         }
     } catch (error) {
-        console.warn('Unable to load server files or localStorage. Hydrating fallback data.', error);
+        console.warn('Using fallback data structure.', error);
         products = FALLBACK_PRODUCTS;
         brands = FALLBACK_BRANDS;
         contact = FALLBACK_CONTACT;
@@ -160,6 +148,7 @@ async function loadData() {
  */
 function initNavigation() {
     const navbar = document.getElementById('navbar');
+    if (!navbar) return;
     
     const handleScroll = () => {
         if (window.scrollY > 60) {
@@ -172,7 +161,7 @@ function initNavigation() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Run once initially
+    handleScroll();
 
     // Smooth scroll for internal hashes
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -206,7 +195,7 @@ function initMobileMenu() {
 
     mobileMenuBtn.addEventListener('click', () => {
         mobileMenu.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Stop scrolling behind active overlay
+        document.body.style.overflow = 'hidden';
     });
 
     mobileMenuClose.addEventListener('click', () => {
@@ -214,7 +203,6 @@ function initMobileMenu() {
         document.body.style.overflow = '';
     });
 
-    // Close mobile drawer when clicking menu items
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenu.classList.remove('active');
@@ -224,7 +212,7 @@ function initMobileMenu() {
 }
 
 /**
- * Handles element scroll entrance animations with IntersectionObserver
+ * Element Scroll Entrance Animations
  */
 function initScrollReveal() {
     const observerOptions = {
@@ -236,7 +224,7 @@ function initScrollReveal() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                revealObserver.unobserve(entry.target); // Trigger only once
+                revealObserver.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -245,24 +233,23 @@ function initScrollReveal() {
 }
 
 /**
- * Populates and runs the continuous partner brand slider marquee
+ * Partner Brand Slider Marquee
  */
 function initBrandsMarquee() {
     const marquee = document.getElementById('partners-marquee');
-    if (!marquee) return;
+    if (!marquee || !brands.length) return;
 
-    // We clone the brands array to fill the width of the marquee viewport loop
     const brandsList = [...brands, ...brands, ...brands];
 
     marquee.innerHTML = brandsList.map(brand => `
         <div class="partner-card">
-            <img src="${brand.logo}" alt="${brand.name} Authorized Logo" class="brand-logo" loading="lazy">
+            <img src="${brand.logo}" alt="${brand.name}" class="brand-logo" loading="lazy">
         </div>
     `).join('');
 }
 
 /**
- * Hydrates, filters, and renders the dynamic products gallery with Load More pagination
+ * Dynamic Products Gallery with Filtering and Pagination
  */
 function initProductGallery() {
     const filterContainer = document.getElementById('gallery-filters');
@@ -272,73 +259,65 @@ function initProductGallery() {
 
     if (!grid || !filterContainer) return;
 
-    // Pagination Constants
-    const BATCH_SIZE = 3;
+    const BATCH_SIZE = 6;
     let visibleCount = BATCH_SIZE;
     let activeCategory = 'All';
 
-    // Create set of unique categories
     const categories = ['All', ...new Set(products.map(p => p.category))];
 
-    // Build filter button markup
     filterContainer.innerHTML = categories.map(cat => `
         <button class="filter-btn ${cat === 'All' ? 'active' : ''}" data-category="${cat}" id="filter-btn-${cat.toLowerCase()}">
             ${cat}
         </button>
     `).join('');
 
-    // Handle filter switching
     filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            filterContainer.querySelector('.filter-btn.active').classList.remove('active');
+            filterContainer.querySelector('.filter-btn.active')?.classList.remove('active');
             this.classList.add('active');
             
             activeCategory = this.getAttribute('data-category');
-            visibleCount = BATCH_SIZE; // Reset page count on filter switch
+            visibleCount = BATCH_SIZE;
             renderProductCards(activeCategory);
         });
     });
 
-    // Handle Load More click
     if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', () => {
+        loadMoreBtn.onclick = () => {
             visibleCount += BATCH_SIZE;
             renderProductCards(activeCategory);
-        });
+        };
     }
 
-    // Render cards function
     const renderProductCards = (category) => {
         const filtered = category === 'All' 
             ? products 
             : products.filter(p => p.category === category);
 
-        // Slice products to limit visible items
         const visibleProducts = filtered.slice(0, visibleCount);
 
         grid.innerHTML = visibleProducts.map(p => {
-            // Apply responsive parameters for Unsplash URLs
             const imageSrc = p.image.includes('unsplash') 
                 ? `${p.image.split('?')[0]}?auto=format&fit=crop&w=600&q=60` 
                 : p.image;
 
-            const whatsappText = encodeURIComponent(`Hello Allied Agencies, I am interested in learning more about your product: ${p.name}. Could you share detailed specifications and pricing?`);
+            const whatsappText = encodeURIComponent(`Hello Allied Agencies, I am interested in: ${p.name}. Could you share detailed specifications and pricing?`);
 
             return `
                 <div class="product-card reveal">
                     <div class="product-image">
                         <img src="${imageSrc}" alt="${p.name}" loading="lazy">
-                        <span class="product-category ${p.categoryColor}">${p.category}</span>
+                        <span class="product-category ${p.categoryColor || ''}">${p.category}</span>
                     </div>
                     <div class="product-content">
                         <h3 class="product-title">${p.name}</h3>
                         <p class="product-desc">${p.description}</p>
                         <div class="product-actions">
-                            <span class="product-badge badge-${p.badgeColor}">${p.status}</span>
-                            <a href="https://wa.me/${contact.whatsappNumber}?text=${whatsappText}" 
+                            <span class="product-badge badge-${p.badgeColor || 'green'}">${p.status || 'available'}</span>
+                            <a href="https://wa.me/${contact.whatsappNumber || '919495977454'}?text=${whatsappText}" 
                                class="product-link" 
                                target="_blank" 
-                               rel="noopener"
+                               rel="noopener noreferrer"
                                id="product-link-${p.id}">
                                Inquire
                             </a>
@@ -348,30 +327,24 @@ function initProductGallery() {
             `;
         }).join('');
 
-        // Show/Hide Load More Button Container
         if (loadMoreContainer) {
             if (filtered.length > visibleCount) {
                 loadMoreContainer.style.display = 'block';
-                // Trigger reveal scroll animation trigger
-                setTimeout(() => {
-                    loadMoreContainer.classList.add('active');
-                }, 50);
+                setTimeout(() => loadMoreContainer.classList.add('active'), 50);
             } else {
                 loadMoreContainer.style.display = 'none';
                 loadMoreContainer.classList.remove('active');
             }
         }
 
-        // Trigger reveal animations on freshly loaded DOM nodes
         initScrollReveal();
     };
 
-    // Initial render call
     renderProductCards('All');
 }
 
 /**
- * Hydrates Contact fields and dynamic details
+ * Hydrates Contact Details & Widgets
  */
 function initContactInfo() {
     const address = document.getElementById('contact-address');
@@ -379,26 +352,26 @@ function initContactInfo() {
     const email = document.getElementById('contact-email');
     const days = document.getElementById('contact-days');
     const hours = document.getElementById('contact-hours');
-    const whatsappLink = document.getElementById('whatsapp-link');
+    const whatsappFloat = document.getElementById('whatsapp-float-widget');
 
-    if (address) address.innerHTML = contact.address.replace(/\n/g, '<br>');
-    if (phone) {
+    if (address && contact.address) address.innerHTML = contact.address.replace(/\n/g, '<br>');
+    if (phone && contact.displayPhone) {
         phone.textContent = contact.displayPhone;
-        phone.setAttribute('href', `tel:${contact.whatsappNumber}`);
+        phone.setAttribute('href', `tel:+${contact.whatsappNumber}`);
     }
-    if (email) {
+    if (email && contact.email) {
         email.textContent = contact.email;
         email.setAttribute('href', `mailto:${contact.email}`);
     }
-    if (days) days.textContent = contact.days;
-    if (hours) hours.textContent = contact.hours;
-    if (whatsappLink) {
-        whatsappLink.setAttribute('href', `https://wa.me/${contact.whatsappNumber}`);
+    if (days && contact.days) days.textContent = contact.days;
+    if (hours && contact.hours) hours.textContent = contact.hours;
+    if (whatsappFloat && contact.whatsappNumber) {
+        whatsappFloat.setAttribute('href', `https://wa.me/${contact.whatsappNumber}`);
     }
 }
 
 /**
- * Deferred Location Map Lazy-loading system
+ * Deferred Map Loading
  */
 function initDeferredMap() {
     const mapContainer = document.querySelector('.map-container');
@@ -407,11 +380,12 @@ function initDeferredMap() {
 
     if (!mapContainer || !mapFrame || !placeholder) return;
 
-    // We start loading the iframe source once the map container gets within viewport range
     const mapObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                mapFrame.setAttribute('src', contact.mapEmbedUrl);
+                if (contact.mapEmbedUrl) {
+                    mapFrame.setAttribute('src', contact.mapEmbedUrl);
+                }
                 mapObserver.unobserve(mapContainer);
             }
         });
@@ -419,26 +393,22 @@ function initDeferredMap() {
 
     mapObserver.observe(mapContainer);
 
-    // Frame onload transition
     mapFrame.addEventListener('load', () => {
         placeholder.classList.add('hidden');
         mapFrame.classList.add('loaded');
         setTimeout(() => {
             placeholder.style.display = 'none';
-        }, 800); // Let fade out animation complete
+        }, 800);
     });
 }
 
-// App Orchestration on Bootstrap
+// Bootstrap
 document.addEventListener('DOMContentLoaded', async () => {
-    // Current year stamp
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // Load static content data
     await loadData();
 
-    // Hydrate modules
     initNavigation();
     initMobileMenu();
     initBrandsMarquee();
@@ -447,6 +417,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     initDeferredMap();
     initScrollReveal();
 
-    // Reveal layout content fully
     document.body.classList.add('loaded');
 });
