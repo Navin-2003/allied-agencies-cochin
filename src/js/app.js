@@ -109,7 +109,7 @@ const FALLBACK_BRANDS = [
 const FALLBACK_CONTACT = {
     "whatsappNumber": "919495977454",
     "displayPhone": "+91 94959 77454",
-    "email": "sales@alliedcochin.com",
+    "email": "andrewsallied@gmail.com",
     "address": "Mukkadackal Buildings,\nHill Palace Rd, Thrippunithura,\nKochi, Kerala 682301",
     "hours": "10:00 AM – 7:00 PM",
     "days": "Mon — Sat",
@@ -154,7 +154,7 @@ async function loadData() {
 function initNavigation() {
     const navbar = document.getElementById('navbar');
     if (!navbar) return;
-    
+
     const handleScroll = () => {
         if (window.scrollY > 60) {
             navbar.classList.add('scrolled');
@@ -170,11 +170,11 @@ function initNavigation() {
 
     // Smooth scroll for internal hashes
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
+
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 const navHeight = navbar.offsetHeight;
@@ -277,10 +277,10 @@ function initProductGallery() {
     `).join('');
 
     filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             filterContainer.querySelector('.filter-btn.active')?.classList.remove('active');
             this.classList.add('active');
-            
+
             activeCategory = this.getAttribute('data-category');
             visibleCount = BATCH_SIZE;
             renderProductCards(activeCategory);
@@ -295,15 +295,15 @@ function initProductGallery() {
     }
 
     const renderProductCards = (category) => {
-        const filtered = category === 'All' 
-            ? products 
+        const filtered = category === 'All'
+            ? products
             : products.filter(p => p.category === category);
 
         const visibleProducts = filtered.slice(0, visibleCount);
 
         grid.innerHTML = visibleProducts.map(p => {
-            const imageSrc = p.image.includes('unsplash') 
-                ? `${p.image.split('?')[0]}?auto=format&fit=crop&w=600&q=60` 
+            const imageSrc = p.image.includes('unsplash')
+                ? `${p.image.split('?')[0]}?auto=format&fit=crop&w=600&q=60`
                 : p.image;
 
             const whatsappText = encodeURIComponent(`Hello Allied Agencies, I am interested in: ${p.name}. Could you share detailed specifications and pricing?`);
