@@ -90,14 +90,19 @@ const FALLBACK_BRANDS = [
         "logo": "https://texmo.com/wp-content/uploads/2021/03/texmo-logo.png"
     },
     {
-        "id": "cri-pumps",
-        "name": "CRI Pumps",
-        "logo": "https://www.cripumps.com/wp-content/uploads/2021/03/cri-logo.png"
+        "id": "ellai-laxmi",
+        "name": "Sri Ellai Laxmi",
+        "logo": "https://placehold.co/400x200/1e40af/ffffff?text=Ellai+Laxmi"
     },
     {
-        "id": "lubi",
-        "name": "Lubi",
-        "logo": "https://lubipumps.com/wp-content/uploads/2021/03/lubi-logo.png"
+        "id": "ksb",
+        "name": "KSB",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Official_KSB_Aktiengesellschaft_Logo.png"
+    },
+    {
+        "id": "wilo",
+        "name": "Wilo",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/c/cd/WILO_Logo_2013.svg"
     }
 ];
 
