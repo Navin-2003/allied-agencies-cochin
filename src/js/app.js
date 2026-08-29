@@ -244,7 +244,7 @@ function initBrandsMarquee() {
     const marquee = document.getElementById('partners-marquee');
     if (!marquee || !brands.length) return;
 
-    const brandsList = [...brands, ...brands, ...brands];
+    const brandsList = [...brands, ...brands];
 
     marquee.innerHTML = brandsList.map(brand => `
         <div class="partner-card">
