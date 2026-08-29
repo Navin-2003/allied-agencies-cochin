@@ -92,7 +92,7 @@ const FALLBACK_BRANDS = [
     {
         "id": "ellai-laxmi",
         "name": "Sri Ellai Laxmi",
-        "logo": "https://placehold.co/400x200/1e40af/ffffff?text=Ellai+Laxmi"
+        "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2TRqyX-8BWPtlC6u1meO3IULKS1XSFs4XM--XQ2v0u4cORQJLkmb203A&s=10"
     },
     {
         "id": "ksb",
