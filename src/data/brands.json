@@ -2,7 +2,7 @@
   {
     "id": "kirloskar",
     "name": "Kirloskar",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Kirloskar_Group_Logo.svg/2560px-Kirloskar_Group_Logo.svg.png",
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQLt5SpzYRqMF59D3SyJaYxlAMgbEkKDbyLb2a1tQu4w&s",
     "description": "Premium industrial pumps and engineering solutions",
     "featured": true,
     "website": "https://kirloskar.com"
@@ -18,7 +18,7 @@
   {
     "id": "texmo",
     "name": "Texmo",
-    "logo": "https://texmo.com/wp-content/uploads/2021/03/texmo-logo.png",
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMZZ51CH2wDjdzVSGwxVaCODPrti384_FG3nxs4VIcyQ&s=10",
     "description": "High-quality pumps for various applications",
     "featured": true,
     "website": "https://texmo.com"
@@ -26,7 +26,7 @@
   {
     "id": "ellai-laxmi",
     "name": "Sri Ellai Laxmi",
-    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2TRqyX-8BWPtlC6u1meO3IULKS1XSFs4XM--XQ2v0u4cORQJLkmb203A&s=10",
+    "logo": "",
     "description": "Efficient and durable domestic and monobloc pumpsets",
     "featured": true,
     "website": "https://www.ellaiilaxmipumpset.in"
@@ -42,7 +42,7 @@
   {
     "id": "wilo",
     "name": "Wilo",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/c/cd/WILO_Logo_2013.svg",
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2TRqyX-8BWPtlC6u1meO3IULKS1XSFs4XM--XQ2v0u4cORQJLkmb203A&s=10",
     "description": "Premium high-efficiency pumping technology",
     "featured": true,
     "website": "https://wilo.com"
