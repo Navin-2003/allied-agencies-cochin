@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Allied Agencies Admin Panel</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-hover: #1e3a8a;
+            --secondary: #0ea5e9;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--text);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            border-right: 1px solid var(--border);
+        }
+
+        .tab:last-child {
+            border-right: none;
+        }
+
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: #f1f5f9;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 0 0 12px 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            min-height: 400px;
+        }
+
+        .panel.hidden {
+            display: none;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .data-list {
+            margin-top: 30px;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .data-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .item-title {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .item-meta {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .status-available {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #065f46;
+        }
+
+        .status-unavailable {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #7f1d1d;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            background-color: #e2e8f0;
+            color: #334155;
+            margin-right: 5px;
+        }
+
+        .image-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .alert-success {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #065f46;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .alert-error {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #7f1d1d;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: #f8fafc;
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary);
+            background-color: rgba(30, 64, 175, 0.1);
+        }
+
+        /* Passcode Security Lock Styles */
+        .security-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            transition: opacity 0.4s ease-out;
+        }
+        .security-card {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+        .security-card h2 {
+            font-family: 'Inter', sans-serif;
+            color: #38bdf8;
+            margin-bottom: 12px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        .security-card p {
+            color: #94a3b8;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .security-card input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 0.25em;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+            transition: all 0.2s ease;
+        }
+        .security-card input[type="password"]:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25);
+        }
+        .btn-unlock {
+            width: 100%;
+            padding: 14px;
+            background-color: #0ea5e9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .btn-unlock:hover {
+            background-color: #0284c7;
+            transform: translateY(-1px);
+        }
+        .error-message {
+            color: #f87171;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: filter 0.4s ease;
+        }
+        .admin-container.blurred {
+            filter: blur(15px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Notice Banner */
+        .sync-notice-banner {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            color: #0369a1;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .sync-notice-banner svg {
+            flex-shrink: 0;
+            color: #0ea5e9;
+            margin-top: 2px;
+        }
+        .sync-notice-banner strong {
+            color: #0369a1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Security Passcode Overlay -->
+    <div class="security-overlay" id="security-overlay">
+        <div class="security-card">
+            <h2>Access Restricted</h2>
+            <p>Please enter the administrator passcode to manage Allied Agencies Cochin.</p>
+            <form onsubmit="verifyPasscode(event)">
+                <input type="password" id="admin-passcode" placeholder="••••••••" required autofocus>
+                <button type="submit" class="btn-unlock">Unlock Panel</button>
+                <div class="error-message" id="passcode-error">Invalid passcode. Please try again.</div>
+            </form>
+        </div>
+    </div>
+
+    <div class="admin-container blurred" id="admin-container">
+        <!-- Sync Warning Banner -->
+        <div class="sync-notice-banner">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <div>
+                <strong>GitHub Pages Sync Workflow:</strong> Edits made here save strictly to your browser's local cache. To update the live public site, click <strong>Export Data</strong>, download the JSON, and commit it to your GitHub repository in the <code>src/data/</code> folder.
+            </div>
+        </div>
+
+        <header>
+            <div class="logo">ALLIED AGENCIES ADMIN</div>
+            <div class="controls">
+                <button class="btn btn-secondary" onclick="exportData()">Export Data</button>
+                <button class="btn btn-primary" onclick="importData()">Import Data</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;">
+                <button class="btn btn-danger" onclick="clearStorage()">Clear Storage</button>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('products')">Products</button>
+            <button class="tab" onclick="switchTab('brands')">Brands</button>
+            <button class="tab" onclick="switchTab('contact')">Contact</button>
+        </div>
+
+        <!-- Products Panel -->
+        <div id="products-panel" class="panel">
+            <div class="form-grid">
+                <div>
+                    <h3>Add/Edit Product</h3>
+                    <form id="product-form">
+                        <input type="hidden" id="product-id">
+                        <div class="form-group">
+                            <label for="product-name">Product Name</label>
+                            <input type="text" id="product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-category">Category</label>
+                            <input type="text" id="product-category" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-description">Description</label>
+                            <textarea id="product-description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-image">Image URL</label>
+                            <input type="url" id="product-image" required>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="product-featured">
+                            <label for="product-featured">Featured Product</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-status">Status</label>
+                            <select id="product-status">
+                                <option value="available">Available</option>
+                                <option value="unavailable">Unavailable</option>
+                            </select>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Save Product</button>
+                            <button type="button" class="btn btn-secondary" onclick="resetProductForm()">Reset</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <h3>Image Upload</h3>
+                    <div id="upload-area" class="upload-area">
+                        <p>Drag & drop image here or click to upload</p>
+                        <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                    </div>
+                    <div id="upload-preview" class="hidden" style="margin-top: 15px;">
+                        <img id="preview-image" style="max-width: 100%; border-radius: 8px;">
+                        <p id="image-url" style="margin-top: 10px; font-size: 0.8rem; color: var(--text-light);"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-list">
+                <h3>Current Products</h3>
+                <div id="products-list"></div>
+            </div>
+        </div>
+
+        <!-- Brands Panel -->
+        <div id="brands-panel" class="panel hidden">
+            <div class="form-grid">
+                <div>
+                    <h3>Add/Edit Brand</h3>
+                    <form id="brand-form">
+                        <input type="hidden" id="brand-id">
+                        <div class="form-group">
+                            <label for="brand-name">Brand Name</label>
+                            <input type="text" id="brand-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="brand-logo">Logo URL</label>
+                            <input type="url" id="brand-logo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="brand-description">Description</label>
+                            <textarea id="brand-description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="brand-website">Website URL</label>
+                            <input type="url" id="brand-website">
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="brand-featured">
+                            <label for="brand-featured">Featured Brand</label>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Save Brand</button>
+                            <button type="button" class="btn btn-secondary" onclick="resetBrandForm()">Reset</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <h3>Brand Logo Upload</h3>
+                    <div id="brand-upload-area" class="upload-area">
+                        <p>Drag & drop logo here or click to upload</p>
+                        <input type="file" id="brand-image-upload" accept="image/*" style="display: none;">
+                    </div>
+                    <div id="brand-upload-preview" class="hidden" style="margin-top: 15px;">
+                        <img id="brand-preview-image" style="max-width: 200px; border-radius: 8px;">
+                        <p id="brand-image-url" style="margin-top: 10px; font-size: 0.8rem; color: var(--text-light);"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-list">
+                <h3>Current Brands</h3>
+                <div id="brands-list"></div>
+            </div>
+        </div>
+
+        <!-- Contact Panel -->
+        <div id="contact-panel" class="panel hidden">
+            <div class="form-grid">
+                <div>
+                    <h3>Contact Information</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="contact-phone">Phone Number</label>
+                            <input type="tel" id="contact-phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-address">Address</label>
+                            <textarea id="contact-address" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-hours">Business Hours</label>
+                            <input type="text" id="contact-hours" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-map">Google Maps Embed URL</label>
+                            <input type="url" id="contact-map" required>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Save Contact</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <h3>Social Media</h3>
+                    <form id="social-form">
+                        <div class="form-group">
+                            <label for="social-facebook">Facebook URL</label>
+                            <input type="url" id="social-facebook">
+                        </div>
+                        <div class="form-group">
+                            <label for="social-instagram">Instagram URL</label>
+                            <input type="url" id="social-instagram">
+                        </div>
+                        <div class="form-group">
+                            <label for="social-linkedin">LinkedIn URL</label>
+                            <input type="url" id="social-linkedin">
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Save Social</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Secure Passcode configuration
+        const PASSCODE_HASH = '31a43aadbe41bbe9010c2da0e1b9bebf282da641e4b9a8e2fd7a0e3f3d9fa296'; // Hash of 'alliedadmin123'
+        
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        async function verifyPasscode(e) {
+            if (e) e.preventDefault();
+            const passcodeField = document.getElementById('admin-passcode');
+            const errorMsg = document.getElementById('passcode-error');
+            const passcode = passcodeField.value;
+            
+            const hashed = await sha256(passcode);
+            if (hashed === PASSCODE_HASH) {
+                // Clear overlay and remove blur
+                document.getElementById('security-overlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('security-overlay').style.display = 'none';
+                }, 400);
+                document.getElementById('admin-container').classList.remove('blurred');
+                sessionStorage.setItem('admin_unlocked', 'true');
+            } else {
+                errorMsg.style.display = 'block';
+                passcodeField.value = '';
+                passcodeField.focus();
+            }
+        }
+
+        // Data storage
+        let products = [];
+        let brands = [];
+        let contact = {};
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (sessionStorage.getItem('admin_unlocked') === 'true') {
+                document.getElementById('security-overlay').style.display = 'none';
+                document.getElementById('admin-container').classList.remove('blurred');
+            }
+            await loadData();
+            renderProducts();
+            renderBrands();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Product form
+            document.getElementById('product-form').addEventListener('submit', saveProduct);
+            document.getElementById('upload-area').addEventListener('click', () => document.getElementById('image-upload').click());
+            document.getElementById('image-upload').addEventListener('change', handleImageUpload);
+            
+            // Brand form
+            document.getElementById('brand-form').addEventListener('submit', saveBrand);
+            document.getElementById('brand-upload-area').addEventListener('click', () => document.getElementById('brand-image-upload').click());
+            document.getElementById('brand-image-upload').addEventListener('change', handleBrandImageUpload);
+
+            // Contact forms
+            document.getElementById('contact-form').addEventListener('submit', saveContact);
+            document.getElementById('social-form').addEventListener('submit', saveSocial);
+
+            // Drag and drop for uploads
+            setupDragAndDrop('upload-area', 'image-upload');
+            setupDragAndDrop('brand-upload-area', 'brand-image-upload');
+
+            // Import file input
+            document.getElementById('importFile').addEventListener('change', handleImport);
+        }
+
+        function setupDragAndDrop(areaId, inputId) {
+            const area = document.getElementById(areaId);
+            const input = document.getElementById(inputId);
+
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                area.classList.add('dragover');
+            });
+
+            area.addEventListener('dragleave', () => {
+                area.classList.remove('dragover');
+            });
+
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.classList.remove('dragover');
+                if (e.dataTransfer.files.length > 0) {
+                    input.files = e.dataTransfer.files;
+                    if (inputId === 'image-upload') {
+                        handleImageUpload({ target: input });
+                    } else {
+                        handleBrandImageUpload({ target: input });
+                    }
+                }
+            });
+        }
+
+        // Data Management
+        async function loadData() {
+            let savedProducts = localStorage.getItem('products');
+            let savedBrands = localStorage.getItem('brands');
+            let savedContact = localStorage.getItem('contact');
+
+            // If local storage is empty, attempt to hydrate from server JSON files
+            if (!savedProducts || !savedBrands) {
+                try {
+                    const [productsRes, brandsRes, contactRes] = await Promise.all([
+                        fetch('src/data/products.json'),
+                        fetch('src/data/brands.json'),
+                        fetch('src/data/contact.json')
+                    ]);
+                    if (productsRes.ok && brandsRes.ok && contactRes.ok) {
+                        products = await productsRes.json();
+                        brands = await brandsRes.json();
+                        contact = await contactRes.json();
+                        
+                        // Save default server state to local storage
+                        localStorage.setItem('products', JSON.stringify(products));
+                        localStorage.setItem('brands', JSON.stringify(brands));
+                        localStorage.setItem('contact', JSON.stringify(contact));
+                        return;
+                    }
+                } catch (e) {
+                    console.warn("Could not retrieve server JSON for default admin state.");
+                }
+            }
+
+            products = savedProducts ? JSON.parse(savedProducts) : [];
+            brands = savedBrands ? JSON.parse(savedBrands) : [];
+            contact = savedContact ? JSON.parse(savedContact) : getDefaultContact();
+        }
+
+        function getDefaultContact() {
+            return {
+                whatsappNumber: "919846012345",
+                displayPhone: "+91 98460 12345",
+                email: "sales@alliedcochin.com",
+                address: "Mukkadackal Buildings,\nHill Palace Rd, Thrippunithura,\nKochi, Kerala 682301",
+                hours: "10:00 AM – 7:00 PM",
+                days: "Mon — Sat",
+                mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.843463094383!2d76.34906435714718!3d9.946979262202058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b08736fb5d50c73%3A0xe4a9dbcb890ad55f!2sAllied%20Agencies%20Cochin!5e0!3m2!1sen!2sin!4v1769162231967",
+                social: {
+                    facebook: "https://facebook.com/alliedcochin",
+                    instagram: "https://instagram.com/alliedcochin",
+                    linkedin: "https://linkedin.com/company/alliedcochin"
+                },
+                businessHours: {
+                    monday: "10:00 AM - 7:00 PM",
+                    tuesday: "10:00 AM - 7:00 PM",
+                    wednesday: "10:00 AM - 7:00 PM",
+                    thursday: "10:00 AM - 7:00 PM",
+                    friday: "10:00 AM - 7:00 PM",
+                    saturday: "10:00 AM - 7:00 PM",
+                    sunday: "Closed"
+                }
+            };
+        }
+
+        function saveData() {
+            localStorage.setItem('products', JSON.stringify(products));
+            localStorage.setItem('brands', JSON.stringify(brands));
+            localStorage.setItem('contact', JSON.stringify(contact));
+            showAlert('Data saved successfully!', 'success');
+        }
+
+        // Products
+        function renderProducts() {
+            const container = document.getElementById('products-list');
+            container.innerHTML = products.map(product => `
+                <div class="data-item">
+                    <div class="item-info">
+                        <span class="item-title">${product.name}</span>
+                        <span class="category-badge">${product.category}</span>
+                        <span class="item-meta">${product.description}</span>
+                        <span class="status-badge status-${product.status}">${product.status}</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-warning" onclick="editProduct('${product.id}')">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveProduct(e) {
+            e.preventDefault();
+            const id = document.getElementById('product-id').value;
+            const product = {
+                id: id || Date.now().toString(),
+                name: document.getElementById('product-name').value,
+                category: document.getElementById('product-category').value,
+                description: document.getElementById('product-description').value,
+                image: document.getElementById('product-image').value,
+                featured: document.getElementById('product-featured').checked,
+                status: document.getElementById('product-status').value
+            };
+
+            if (id) {
+                const index = products.findIndex(p => p.id === id);
+                products[index] = product;
+            } else {
+                products.push(product);
+            }
+
+            saveData();
+            renderProducts();
+            resetProductForm();
+            showAlert('Product saved successfully!', 'success');
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            document.getElementById('product-id').value = product.id;
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('product-category').value = product.category;
+            document.getElementById('product-description').value = product.description;
+            document.getElementById('product-image').value = product.image;
+            document.getElementById('product-featured').checked = product.featured;
+            document.getElementById('product-status').value = product.status;
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                products = products.filter(p => p.id !== id);
+                saveData();
+                renderProducts();
+                showAlert('Product deleted!', 'success');
+            }
+        }
+
+        function resetProductForm() {
+            document.getElementById('product-form').reset();
+            document.getElementById('product-id').value = '';
+        }
+
+        // Brands
+        function renderBrands() {
+            const container = document.getElementById('brands-list');
+            container.innerHTML = brands.map(brand => `
+                <div class="data-item">
+                    <div class="item-info">
+                        <span class="item-title">${brand.name}</span>
+                        <span class="item-meta">${brand.description}</span>
+                        <span class="item-meta">Website: ${brand.website || 'Not specified'}</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-warning" onclick="editBrand('${brand.id}')">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteBrand('${brand.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveBrand(e) {
+            e.preventDefault();
+            const id = document.getElementById('brand-id').value;
+            const brand = {
+                id: id || Date.now().toString(),
+                name: document.getElementById('brand-name').value,
+                logo: document.getElementById('brand-logo').value,
+                description: document.getElementById('brand-description').value,
+                website: document.getElementById('brand-website').value,
+                featured: document.getElementById('brand-featured').checked
+            };
+
+            if (id) {
+                const index = brands.findIndex(b => b.id === id);
+                brands[index] = brand;
+            } else {
+                brands.push(brand);
+            }
+
+            saveData();
+            renderBrands();
+            resetBrandForm();
+            showAlert('Brand saved successfully!', 'success');
+        }
+
+        function editBrand(id) {
+            const brand = brands.find(b => b.id === id);
+            document.getElementById('brand-id').value = brand.id;
+            document.getElementById('brand-name').value = brand.name;
+            document.getElementById('brand-logo').value = brand.logo;
+            document.getElementById('brand-description').value = brand.description;
+            document.getElementById('brand-website').value = brand.website;
+            document.getElementById('brand-featured').checked = brand.featured;
+        }
+
+        function deleteBrand(id) {
+            if (confirm('Are you sure you want to delete this brand?')) {
+                brands = brands.filter(b => b.id !== id);
+                saveData();
+                renderBrands();
+                showAlert('Brand deleted!', 'success');
+            }
+        }
+
+        function resetBrandForm() {
+            document.getElementById('brand-form').reset();
+            document.getElementById('brand-id').value = '';
+        }
+
+        // Contact
+        function saveContact(e) {
+            e.preventDefault();
+            contact.displayPhone = document.getElementById('contact-phone').value;
+            contact.email = document.getElementById('contact-email').value;
+            contact.address = document.getElementById('contact-address').value;
+            contact.hours = document.getElementById('contact-hours').value;
+            contact.mapEmbedUrl = document.getElementById('contact-map').value;
+            
+            saveData();
+            showAlert('Contact information saved!', 'success');
+        }
+
+        function saveSocial(e) {
+            e.preventDefault();
+            contact.social.facebook = document.getElementById('social-facebook').value;
+            contact.social.instagram = document.getElementById('social-instagram').value;
+            contact.social.linkedin = document.getElementById('social-linkedin').value;
+            
+            saveData();
+            showAlert('Social media links saved!', 'success');
+        }
+
+        // Image Upload
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview-image').src = e.target.result;
+                    document.getElementById('image-url').textContent = 'Image uploaded successfully!';
+                    document.getElementById('product-image').value = e.target.result;
+                    document.getElementById('upload-preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleBrandImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('brand-preview-image').src = e.target.result;
+                    document.getElementById('brand-image-url').textContent = 'Logo uploaded successfully!';
+                    document.getElementById('brand-logo').value = e.target.result;
+                    document.getElementById('brand-upload-preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Admin Functions
+        function switchTab(tabName) {
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update panels
+            document.querySelectorAll('.panel').forEach(panel => panel.classList.add('hidden'));
+            document.getElementById(tabName + '-panel').classList.remove('hidden');
+        }
+
+        function exportData() {
+            const data = {
+                products: products,
+                brands: brands,
+                contact: contact,
+                exportDate: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'allied-agencies-data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showAlert('Data exported successfully!', 'success');
+        }
+
+        function importData() {
+            document.getElementById('importFile').click();
+        }
+
+        function handleImport(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (data.products) products = data.products;
+                        if (data.brands) brands = data.brands;
+                        if (data.contact) contact = data.contact;
+                        
+                        saveData();
+                        renderProducts();
+                        renderBrands();
+                        showAlert('Data imported successfully!', 'success');
+                    } catch (error) {
+                        showAlert('Error importing data: Invalid JSON file', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function clearStorage() {
+            if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
+                localStorage.clear();
+                products = [];
+                brands = [];
+                contact = getDefaultContact();
+                renderProducts();
+                renderBrands();
+                showAlert('All data cleared!', 'success');
+            }
+        }
+
+        function showAlert(message, type) {
+            // Remove existing alerts
+            const existingAlert = document.querySelector('.alert');
+            if (existingAlert) existingAlert.remove();
+
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            const container = document.querySelector('.admin-container');
+            container.insertBefore(alert, container.firstChild);
+
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
