@@ -92,7 +92,7 @@ const FALLBACK_BRANDS = [
     {
         "id": "ellai-laxmi",
         "name": "Sri Ellai Laxmi",
-        "logo": ""
+        "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT0wcA2vwHjcKYUHbTP9qnT6lVh5zbGk_A5TmXmXp1OA&s=10"
     },
     {
         "id": "ksb",
