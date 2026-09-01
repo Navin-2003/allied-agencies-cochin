@@ -20,4 +20,4 @@ Disallow: /src/data/
 Allow: /
 
 # Sitemap Location
-Sitemap: https://www.alliedcochin.com/sitemap.xml
+Sitemap: https://alliedagenciescochin.in/sitemap.xml

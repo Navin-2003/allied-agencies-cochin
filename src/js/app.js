@@ -234,21 +234,30 @@ function initMobileMenu() {
 
     if (!mobileMenuBtn || !mobileMenuClose || !mobileMenu) return;
 
-    mobileMenuBtn.addEventListener('click', () => {
+    const openMenu = () => {
         mobileMenu.classList.add('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'true');
         document.body.style.overflow = 'hidden';
-    });
+    };
 
-    mobileMenuClose.addEventListener('click', () => {
+    const closeMenu = () => {
         mobileMenu.classList.remove('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
-    });
+    };
+
+    mobileMenuBtn.addEventListener('click', openMenu);
+    mobileMenuClose.addEventListener('click', closeMenu);
 
     mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        });
+        link.addEventListener('click', closeMenu);
+    });
+
+    // Keyboard navigation: Close mobile drawer on Escape key press
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+            closeMenu();
+        }
     });
 }
 
@@ -287,7 +296,7 @@ function initBrandsMarquee() {
         const name = escapeHTML(brand.name);
         return `
             <div class="partner-card">
-                <img src="${logoUrl}" alt="${name}" class="brand-logo" loading="lazy">
+                <img src="${logoUrl}" alt="${name}" class="brand-logo" loading="lazy" onerror="this.onerror=null; this.parentElement.style.opacity='0.6';">
             </div>
         `;
     }).join('');
@@ -365,7 +374,7 @@ function initProductGallery() {
             return `
                 <div class="product-card reveal">
                     <div class="product-image">
-                        <img src="${imageSrc}" alt="${name}" loading="lazy">
+                        <img src="${imageSrc}" alt="${name}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=60';">
                         <span class="product-category ${catColor}">${cat}</span>
                     </div>
                     <div class="product-content">
