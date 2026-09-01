@@ -19,24 +19,31 @@ const MIME_TYPES = {
 const server = http.createServer((req, res) => {
     console.log(`[Request] ${req.method} ${req.url}`);
     
-    // Normalize URL path
-    let safeUrl = req.url.split('?')[0]; // Strip query parameters
+    // Normalize URL path and prevent null byte / traversal attacks
+    let safeUrl = req.url.split('?')[0].replace(/\0/g, ''); // Strip query parameters and null bytes
     let filePath = safeUrl === '/' ? '/index.html' : safeUrl;
     filePath = path.join(__dirname, filePath);
     
     // Prevent directory traversal attacks using relative path analysis
     const relativePath = path.relative(__dirname, filePath);
-    if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+    const normalizedRelative = relativePath.replace(/\\/g, '/');
+    if (normalizedRelative.startsWith('..') || path.isAbsolute(relativePath)) {
         res.statusCode = 403;
         res.setHeader('Content-Type', 'text/plain');
         res.end('Forbidden');
         return;
     }
 
-    // Blacklist access to sensitive backend and config files
+    // Blacklist access to sensitive backend, hidden files, and config files
     const baseName = path.basename(filePath).toLowerCase();
-    const blacklistedFiles = ['server.js', 'package.json', 'package-lock.json', '.git', 'deploy.yml'];
-    if (blacklistedFiles.some(file => baseName.includes(file)) || filePath.includes('/.github/')) {
+    const blacklistedFiles = ['server.js', 'package.json', 'package-lock.json', '.git', '.github', '.env', '.gitignore', 'deploy.yml'];
+    const isHiddenOrBlacklisted = blacklistedFiles.some(file => baseName === file || baseName.startsWith('.')) || 
+                                  normalizedRelative.includes('/.github/') || 
+                                  normalizedRelative.includes('/.git/') ||
+                                  normalizedRelative.startsWith('.github/') ||
+                                  normalizedRelative.startsWith('.git/');
+
+    if (isHiddenOrBlacklisted) {
         res.statusCode = 403;
         res.setHeader('Content-Type', 'text/plain');
         res.end('Access Denied');

@@ -719,6 +719,31 @@
         let brands = [];
         let contact = {};
 
+        /**
+         * Security: HTML Escaping Helper to mitigate XSS vulnerabilities
+         */
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        /**
+         * Security: URL Protocol Validator
+         */
+        function sanitizeURL(url) {
+            if (!url || typeof url !== 'string') return '';
+            const trimmed = url.trim();
+            if (trimmed.startsWith('https://') || trimmed.startsWith('http://') || trimmed.startsWith('data:image/') || trimmed.startsWith('tel:') || trimmed.startsWith('mailto:')) {
+                return trimmed;
+            }
+            return '';
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             if (sessionStorage.getItem('admin_unlocked') === 'true') {
@@ -728,6 +753,7 @@
             await loadData();
             renderProducts();
             renderBrands();
+            renderContact();
             setupEventListeners();
         });
 
@@ -781,6 +807,119 @@
             });
         }
 
+        const FALLBACK_PRODUCTS = [
+            {
+                "id": "submersible-pumps",
+                "name": "Submersible Pumps",
+                "category": "Domestic",
+                "categoryColor": "bg-blue-500",
+                "badgeColor": "green",
+                "description": "High-efficiency multi-stage submersible pumps engineered for open wells, borewells, and overhead tanks, delivering dependable water flow for homes and residential complexes.",
+                "image": "https://imgs.search.brave.com/xiHHj4X1WWyxCLDVHmeW85noeiXzz8Lgs5xoA7merR8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi93YXRl/ci1wdW1wLWlzb2xh/dGVkLXdoaXRlLWJh/Y2tncm91bmQtMzYx/NDMwNzUuanBn",
+                "featured": true,
+                "status": "available"
+            },
+            {
+                "id": "self-priming-pumps",
+                "name": "Self-Priming Pumps",
+                "category": "Domestic",
+                "categoryColor": "bg-blue-500",
+                "badgeColor": "green",
+                "description": "Compact, high-suction self-priming regenerative monoblock pumps designed for municipal line suction, overhead storage filling, and domestic water network boosting.",
+                "image": "https://imgs.search.brave.com/TXye1a89T0ewL9SogMBDCnFmc2dYltSDucGM_o7QCWA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFhdlZneWNYTEwu/anBn",
+                "featured": true,
+                "status": "available"
+            },
+            {
+                "id": "centrifugal-pumps",
+                "name": "Centrifugal Pumps",
+                "category": "Industrial",
+                "categoryColor": "bg-red-500",
+                "badgeColor": "green",
+                "description": "Heavy-duty industrial centrifugal pumps designed for continuous fluid transmission, cooling tower circulation, HVAC plants, and chemical processing facilities.",
+                "image": "https://imgs.search.brave.com/GRTKq807Aj1r3Pzhun1mBFNmNWKhmsTmv0Xk_BFQcnM/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9oYXZl/bGxzLmNvbS9tZWRp/YS9jYXRhbG9nL3By/b2R1Y3QvY2FjaGUv/YmViYjU1NmNjYWEw/NDIzNjI2MWQ4YmE1/Njc2ZGRmNGQvYy9l/L2NlbnRyaWZ1Z2Fs/X21vbm9ibG9ja19w/dW1wX2Jhc2VfOS5q/cGc",
+                "featured": true,
+                "status": "available"
+            },
+            {
+                "id": "sewage-pumps",
+                "name": "Sewage/Drainage Pumps",
+                "category": "Industrial",
+                "categoryColor": "bg-red-500",
+                "badgeColor": "green",
+                "description": "Heavy-duty submersible cutter and non-clog effluent pumps engineered for basement dewatering, septic tanks, stormwater drainage, and commercial wastewater management.",
+                "image": "https://imgs.search.brave.com/-J_HcpMF0pVfVq-lCQi9V_fgJeF5jb4tVy_ElJqSPfY/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMxLmluZHVzdHJ5/YnV5aW5nLmNvbS9w/cm9kdWN0cy9wdW1w/cy9zZXdhZ2UtcHVt/cHMvc2V3YWdlLXN1/Ym1lcnNpYmxlLXB1/bXBzL1BVTS5TRVcu/NDYwNzMyODBfMTY4/Nzk1NDYwOTc1Ni53/ZWJw",
+                "featured": true,
+                "status": "available"
+            },
+            {
+                "id": "agricultural-pumps",
+                "name": "Agricultural Monoblock Pumps",
+                "category": "Agriculture",
+                "categoryColor": "bg-green-500",
+                "badgeColor": "green",
+                "description": "High-discharge open-well and monoblock irrigation pumps built to withstand harsh rural conditions while optimizing farm hydration, canal lifting, and sprinkler networks.",
+                "image": "https://imgs.search.brave.com/G2Ya46-urLhLXnW_6NbcVIYjbPft9FzXVkHHZfGti7Q/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly81Lmlt/aW1nLmNvbS9kYXRh/NS9TRUxMRVIvRGVm/YXVsdC8yMDI2LzUv/NjA4NzI5Mzg2L0ta/L0hQL0pILzE0NzY1/MTE4NC9hZ3JpY3Vs/dHVyZS1tb25vYmxv/Y2stcHVtcHNldC0y/NTB4MjUwLmpwZWc",
+                "featured": true,
+                "status": "available"
+            },
+            {
+                "id": "water-level-controller",
+                "name": "Water Level Controller",
+                "category": "Agriculture",
+                "categoryColor": "bg-green-500",
+                "badgeColor": "green",
+                "description": "Advanced microcontroller-based automated water level controller with built-in dry-run protection, voltage surge safeguards, and automated reservoir monitoring for agricultural pump sets.",
+                "image": "https://imgs.search.brave.com/Z9E2ZnuKdO9vRZ6kWLew3QqpXTW9QrTsTq916IOCiE8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly92aWRl/b24uaW4vaW1hZ2Vz/L3dhdGVyLWxldmVs/LWNvbnRyb2xsZXIv/dGhyZWUxLmpwZw",
+                "featured": true,
+                "status": "available"
+            },
+            {
+                "id": "pressure-boosters",
+                "name": "Pressure Booster Systems",
+                "category": "Commercial",
+                "categoryColor": "bg-purple-500",
+                "badgeColor": "green",
+                "description": "Intelligent automated multi-stage pressure booster pump systems that ensure constant, high-pressure water delivery across luxury villas, hotels, and commercial buildings.",
+                "image": "https://imgs.search.brave.com/32Eb1ZWINt9_d2mjuLurynh6wpwnP7Xi49GWUdud01E/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTFTdXFxK2ZkMkwu/anBn",
+                "featured": true,
+                "status": "available"
+            }
+        ];
+
+        const FALLBACK_BRANDS = [
+            {
+                "id": "kirloskar",
+                "name": "Kirloskar",
+                "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQLt5SpzYRqMF59D3SyJaYxlAMgbEkKDbyLb2a1tQu4w&s"
+            },
+            {
+                "id": "v-guard",
+                "name": "V-Guard",
+                "logo": "https://companieslogo.com/img/orig/VGUARD.NS_BIG-4b6923b2.png?t=1746796117"
+            },
+            {
+                "id": "texmo",
+                "name": "Texmo",
+                "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMZZ51CH2wDjdzVSGwxVaCODPrti384_FG3nxs4VIcyQ&s=10"
+            },
+            {
+                "id": "ellai-laxmi",
+                "name": "Sri Ellai Laxmi",
+                "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT0wcA2vwHjcKYUHbTP9qnT6lVh5zbGk_A5TmXmXp1OA&s=10"
+            },
+            {
+                "id": "ksb",
+                "name": "KSB",
+                "logo": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Official_KSB_Aktiengesellschaft_Logo.png"
+            },
+            {
+                "id": "wilo",
+                "name": "Wilo",
+                "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2TRqyX-8BWPtlC6u1meO3IULKS1XSFs4XM--XQ2v0u4cORQJLkmb203A&s=10"
+            }
+        ];
+
         // Data Management
         async function loadData() {
             let savedProducts = localStorage.getItem('products');
@@ -805,14 +944,16 @@
                         localStorage.setItem('brands', JSON.stringify(brands));
                         localStorage.setItem('contact', JSON.stringify(contact));
                         return;
+                    } else {
+                        throw new Error("Failed to load one or more JSON files from server (status not OK).");
                     }
                 } catch (e) {
-                    console.warn("Could not retrieve server JSON for default admin state.");
+                    console.warn("Could not retrieve server JSON for default admin state.", e);
                 }
             }
 
-            products = savedProducts ? JSON.parse(savedProducts) : [];
-            brands = savedBrands ? JSON.parse(savedBrands) : [];
+            products = savedProducts ? JSON.parse(savedProducts) : FALLBACK_PRODUCTS;
+            brands = savedBrands ? JSON.parse(savedBrands) : FALLBACK_BRANDS;
             contact = savedContact ? JSON.parse(savedContact) : getDefaultContact();
         }
 
@@ -852,20 +993,27 @@
         // Products
         function renderProducts() {
             const container = document.getElementById('products-list');
-            container.innerHTML = products.map(product => `
-                <div class="data-item">
-                    <div class="item-info">
-                        <span class="item-title">${product.name}</span>
-                        <span class="category-badge">${product.category}</span>
-                        <span class="item-meta">${product.description}</span>
-                        <span class="status-badge status-${product.status}">${product.status}</span>
+            container.innerHTML = products.map(product => {
+                const name = escapeHTML(product.name);
+                const category = escapeHTML(product.category);
+                const desc = escapeHTML(product.description);
+                const status = escapeHTML(product.status);
+                const id = escapeHTML(product.id);
+                return `
+                    <div class="data-item">
+                        <div class="item-info">
+                            <span class="item-title">${name}</span>
+                            <span class="category-badge">${category}</span>
+                            <span class="item-meta">${desc}</span>
+                            <span class="status-badge status-${status}">${status}</span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-warning" onclick="editProduct('${id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteProduct('${id}')">Delete</button>
+                        </div>
                     </div>
-                    <div class="item-actions">
-                        <button class="btn btn-warning" onclick="editProduct('${product.id}')">Edit</button>
-                        <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Delete</button>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function saveProduct(e) {
@@ -922,19 +1070,25 @@
         // Brands
         function renderBrands() {
             const container = document.getElementById('brands-list');
-            container.innerHTML = brands.map(brand => `
-                <div class="data-item">
-                    <div class="item-info">
-                        <span class="item-title">${brand.name}</span>
-                        <span class="item-meta">${brand.description}</span>
-                        <span class="item-meta">Website: ${brand.website || 'Not specified'}</span>
+            container.innerHTML = brands.map(brand => {
+                const name = escapeHTML(brand.name);
+                const desc = escapeHTML(brand.description);
+                const website = escapeHTML(brand.website || 'Not specified');
+                const id = escapeHTML(brand.id);
+                return `
+                    <div class="data-item">
+                        <div class="item-info">
+                            <span class="item-title">${name}</span>
+                            <span class="item-meta">${desc}</span>
+                            <span class="item-meta">Website: ${website}</span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-warning" onclick="editBrand('${id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteBrand('${id}')">Delete</button>
+                        </div>
                     </div>
-                    <div class="item-actions">
-                        <button class="btn btn-warning" onclick="editBrand('${brand.id}')">Edit</button>
-                        <button class="btn btn-danger" onclick="deleteBrand('${brand.id}')">Delete</button>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function saveBrand(e) {
@@ -987,9 +1141,34 @@
         }
 
         // Contact
+        function renderContact() {
+            if (!contact) return;
+            const phoneEl = document.getElementById('contact-phone');
+            const emailEl = document.getElementById('contact-email');
+            const addressEl = document.getElementById('contact-address');
+            const hoursEl = document.getElementById('contact-hours');
+            const mapEl = document.getElementById('contact-map');
+            const fbEl = document.getElementById('social-facebook');
+            const igEl = document.getElementById('social-instagram');
+            const liEl = document.getElementById('social-linkedin');
+
+            if (phoneEl) phoneEl.value = contact.displayPhone || contact.whatsappNumber || '';
+            if (emailEl) emailEl.value = contact.email || '';
+            if (addressEl) addressEl.value = contact.address || '';
+            if (hoursEl) hoursEl.value = contact.hours || '';
+            if (mapEl) mapEl.value = contact.mapEmbedUrl || '';
+
+            if (contact.social) {
+                if (fbEl) fbEl.value = contact.social.facebook || '';
+                if (igEl) igEl.value = contact.social.instagram || '';
+                if (liEl) liEl.value = contact.social.linkedin || '';
+            }
+        }
+
         function saveContact(e) {
             e.preventDefault();
             contact.displayPhone = document.getElementById('contact-phone').value;
+            contact.whatsappNumber = document.getElementById('contact-phone').value.replace(/[^0-9]/g, '');
             contact.email = document.getElementById('contact-email').value;
             contact.address = document.getElementById('contact-address').value;
             contact.hours = document.getElementById('contact-hours').value;
@@ -1001,6 +1180,7 @@
 
         function saveSocial(e) {
             e.preventDefault();
+            if (!contact.social) contact.social = {};
             contact.social.facebook = document.getElementById('social-facebook').value;
             contact.social.instagram = document.getElementById('social-instagram').value;
             contact.social.linkedin = document.getElementById('social-linkedin').value;
@@ -1039,14 +1219,20 @@
         }
 
         // Admin Functions
-        function switchTab(tabName) {
+        function switchTab(tabName, evt) {
             // Update tabs
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
+            if (evt && evt.target) {
+                evt.target.classList.add('active');
+            } else {
+                const activeBtn = Array.from(document.querySelectorAll('.tab')).find(t => t.getAttribute('onclick')?.includes(tabName));
+                if (activeBtn) activeBtn.classList.add('active');
+            }
 
             // Update panels
             document.querySelectorAll('.panel').forEach(panel => panel.classList.add('hidden'));
-            document.getElementById(tabName + '-panel').classList.remove('hidden');
+            const targetPanel = document.getElementById(tabName + '-panel');
+            if (targetPanel) targetPanel.classList.remove('hidden');
         }
 
         function exportData() {
@@ -1087,6 +1273,7 @@
                         saveData();
                         renderProducts();
                         renderBrands();
+                        renderContact();
                         showAlert('Data imported successfully!', 'success');
                     } catch (error) {
                         showAlert('Error importing data: Invalid JSON file', 'error');
@@ -1097,14 +1284,18 @@
         }
 
         function clearStorage() {
-            if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
-                localStorage.clear();
-                products = [];
-                brands = [];
+            if (confirm('Are you sure you want to reset all data to default? This will overwrite your custom changes.')) {
+                localStorage.removeItem('products');
+                localStorage.removeItem('brands');
+                localStorage.removeItem('contact');
+                products = [...FALLBACK_PRODUCTS];
+                brands = [...FALLBACK_BRANDS];
                 contact = getDefaultContact();
+                saveData();
                 renderProducts();
                 renderBrands();
-                showAlert('All data cleared!', 'success');
+                renderContact();
+                showAlert('Data reset to default successfully!', 'success');
             }
         }
 
@@ -1118,7 +1309,9 @@
             alert.textContent = message;
             
             const container = document.querySelector('.admin-container');
-            container.insertBefore(alert, container.firstChild);
+            if (container) {
+                container.insertBefore(alert, container.firstChild);
+            }
 
             setTimeout(() => {
                 alert.remove();

@@ -1,23 +1,23 @@
-﻿User-agent: *
+User-agent: *
+Disallow: /admin.html
+Disallow: /src/data/
 Allow: /
 
-Sitemap: https://yourusername.github.io/your-repo-name/sitemap.xml
-
-# Google AdsBot - Allow crawling
-User-agent: AdsBot-Google
-Allow: /
-
-# Googlebot - Allow crawling
+# Crawler Specific Directives
 User-agent: Googlebot
+Disallow: /admin.html
+Disallow: /src/data/
 Allow: /
 
-# Bingbot - Allow crawling
 User-agent: bingbot
+Disallow: /admin.html
+Disallow: /src/data/
 Allow: /
 
-# Yandex - Allow crawling
-User-agent: Yandex
+User-agent: AdsBot-Google
+Disallow: /admin.html
+Disallow: /src/data/
 Allow: /
 
-# Sitemap location
-Sitemap: https://yourusername.github.io/your-repo-name/sitemap.xml
+# Sitemap Location
+Sitemap: https://www.alliedcochin.com/sitemap.xml
