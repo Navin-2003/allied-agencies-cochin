@@ -25,6 +25,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Exclude admin panel and server from public build
+        run: rm -f admin.html server.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
