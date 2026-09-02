@@ -13,7 +13,8 @@ const MIME_TYPES = {
     '.ico': 'image/x-icon',
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
-    '.jpeg': 'image/jpeg'
+    '.jpeg': 'image/jpeg',
+    '.webmanifest': 'application/manifest+json'
 };
 
 const server = http.createServer((req, res) => {

@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Allied Agencies Admin Panel</title>
     
+    <!-- Favicon & Touch Icons (Google Search & Multi-Device Optimized) -->
+    <link rel="icon" type="image/svg+xml" href="src/images/favicons/favicon.svg">
+    <link rel="icon" type="image/png" sizes="48x48" href="src/images/favicons/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="src/images/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="src/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="src/images/favicons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="src/images/favicons/apple-touch-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
@@ -733,12 +743,19 @@
         }
 
         /**
-         * Security: URL Protocol Validator
+         * Security: URL Protocol Validator (supports HTTPS, HTTP, Data URIs, and relative paths)
          */
         function sanitizeURL(url) {
             if (!url || typeof url !== 'string') return '';
             const trimmed = url.trim();
-            if (trimmed.startsWith('https://') || trimmed.startsWith('http://') || trimmed.startsWith('data:image/') || trimmed.startsWith('tel:') || trimmed.startsWith('mailto:')) {
+            if (trimmed.startsWith('https://') || 
+                trimmed.startsWith('http://') || 
+                trimmed.startsWith('data:image/') || 
+                trimmed.startsWith('tel:') || 
+                trimmed.startsWith('mailto:') ||
+                trimmed.startsWith('src/') ||
+                trimmed.startsWith('/') ||
+                trimmed.startsWith('./')) {
                 return trimmed;
             }
             return '';

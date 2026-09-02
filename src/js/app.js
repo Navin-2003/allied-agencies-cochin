@@ -146,12 +146,19 @@ function escapeHTML(str) {
 }
 
 /**
- * Security: URL Protocol Validator
+ * Security: URL Protocol Validator (supports HTTPS, HTTP, Data URIs, relative assets)
  */
 function sanitizeURL(url) {
     if (!url || typeof url !== 'string') return '';
     const trimmed = url.trim();
-    if (trimmed.startsWith('https://') || trimmed.startsWith('http://') || trimmed.startsWith('data:image/') || trimmed.startsWith('tel:') || trimmed.startsWith('mailto:')) {
+    if (trimmed.startsWith('https://') || 
+        trimmed.startsWith('http://') || 
+        trimmed.startsWith('data:image/') || 
+        trimmed.startsWith('tel:') || 
+        trimmed.startsWith('mailto:') ||
+        trimmed.startsWith('src/') ||
+        trimmed.startsWith('/') ||
+        trimmed.startsWith('./')) {
         return trimmed;
     }
     return '';
