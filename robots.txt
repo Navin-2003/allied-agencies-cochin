@@ -1,22 +1,5 @@
 User-agent: *
 Disallow: /admin.html
-Disallow: /src/data/
-Allow: /
-
-# Crawler Specific Directives
-User-agent: Googlebot
-Disallow: /admin.html
-Disallow: /src/data/
-Allow: /
-
-User-agent: bingbot
-Disallow: /admin.html
-Disallow: /src/data/
-Allow: /
-
-User-agent: AdsBot-Google
-Disallow: /admin.html
-Disallow: /src/data/
 Allow: /
 
 # Sitemap Location
