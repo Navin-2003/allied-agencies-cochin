@@ -74,7 +74,7 @@ const server = http.createServer((req, res) => {
                 'X-Content-Type-Options': 'nosniff',
                 'X-Frame-Options': 'DENY',
                 'X-XSS-Protection': '1; mode=block',
-                'Content-Security-Policy': "default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://images.unsplash.com https://upload.wikimedia.org https://texmo.com https://www.cripumps.com https://lubipumps.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; frame-src https://www.google.com; img-src 'self' data: https:;"
+                'Content-Security-Policy': "default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://images.unsplash.com https://upload.wikimedia.org https://texmo.com https://lubipumps.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; frame-src https://www.google.com; img-src 'self' data: https:;"
             });
             res.end(content, 'utf-8');
         }

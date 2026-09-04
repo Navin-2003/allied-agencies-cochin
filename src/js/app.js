@@ -12,7 +12,7 @@ const FALLBACK_PRODUCTS = [
         "categoryColor": "bg-blue-500",
         "badgeColor": "green",
         "description": "High-efficiency multi-stage submersible pumps engineered for open wells, borewells, and overhead tanks, delivering dependable water flow for homes and residential complexes.",
-        "image": "https://imgs.search.brave.com/xiHHj4X1WWyxCLDVHmeW85noeiXzz8Lgs5xoA7merR8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi93YXRl/ci1wdW1wLWlzb2xh/dGVkLXdoaXRlLWJh/Y2tncm91bmQtMzYx/NDMwNzUuanBn",
+        "image": "src/images/submersible-pumps.png",
         "featured": true,
         "status": "available"
     },
@@ -23,7 +23,7 @@ const FALLBACK_PRODUCTS = [
         "categoryColor": "bg-blue-500",
         "badgeColor": "green",
         "description": "Compact, high-suction self-priming regenerative monoblock pumps designed for municipal line suction, overhead storage filling, and domestic water network boosting.",
-        "image": "https://imgs.search.brave.com/TXye1a89T0ewL9SogMBDCnFmc2dYltSDucGM_o7QCWA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFhdlZneWNYTEwu/anBn",
+        "image": "src/images/self-priming-pumps.png",
         "featured": true,
         "status": "available"
     },
@@ -34,7 +34,7 @@ const FALLBACK_PRODUCTS = [
         "categoryColor": "bg-red-500",
         "badgeColor": "green",
         "description": "Heavy-duty industrial centrifugal pumps designed for continuous fluid transmission, cooling tower circulation, HVAC plants, and chemical processing facilities.",
-        "image": "https://imgs.search.brave.com/GRTKq807Aj1r3Pzhun1mBFNmNWKhmsTmv0Xk_BFQcnM/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9oYXZl/bGxzLmNvbS9tZWRp/YS9jYXRhbG9nL3By/b2R1Y3QvY2FjaGUv/YmViYjU1NmNjYWEw/NDIzNjI2MWQ4YmE1/Njc2ZGRmNGQvYy9l/L2NlbnRyaWZ1Z2Fs/X21vbm9ibG9ja19w/dW1wX2Jhc2VfOS5q/cGc",
+        "image": "src/images/centrifugal-pumps.png",
         "featured": true,
         "status": "available"
     },
@@ -45,7 +45,7 @@ const FALLBACK_PRODUCTS = [
         "categoryColor": "bg-red-500",
         "badgeColor": "green",
         "description": "Heavy-duty submersible cutter and non-clog effluent pumps engineered for basement dewatering, septic tanks, stormwater drainage, and commercial wastewater management.",
-        "image": "https://imgs.search.brave.com/-J_HcpMF0pVfVq-lCQi9V_fgJeF5jb4tVy_ElJqSPfY/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMxLmluZHVzdHJ5/YnV5aW5nLmNvbS9w/cm9kdWN0cy9wdW1w/cy9zZXdhZ2UtcHVt/cHMvc2V3YWdlLXN1/Ym1lcnNpYmxlLXB1/bXBzL1BVTS5TRVcu/NDYwNzMyODBfMTY4/Nzk1NDYwOTc1Ni53/ZWJw",
+        "image": "src/images/sewage-pumps.png",
         "featured": true,
         "status": "available"
     },
@@ -56,7 +56,7 @@ const FALLBACK_PRODUCTS = [
         "categoryColor": "bg-green-500",
         "badgeColor": "green",
         "description": "High-discharge open-well and monoblock irrigation pumps built to withstand harsh rural conditions while optimizing farm hydration, canal lifting, and sprinkler networks.",
-        "image": "https://imgs.search.brave.com/G2Ya46-urLhLXnW_6NbcVIYjbPft9FzXVkHHZfGti7Q/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly81Lmlt/aW1nLmNvbS9kYXRh/NS9TRUxMRVIvRGVm/YXVsdC8yMDI2LzUv/NjA4NzI5Mzg2L0ta/L0hQL0pILzE0NzY1/MTE4NC9hZ3JpY3Vs/dHVyZS1tb25vYmxv/Y2stcHVtcHNldC0y/NTB4MjUwLmpwZWc",
+        "image": "src/images/agricultural-pumps.png",
         "featured": true,
         "status": "available"
     },
@@ -67,7 +67,7 @@ const FALLBACK_PRODUCTS = [
         "categoryColor": "bg-green-500",
         "badgeColor": "green",
         "description": "Advanced microcontroller-based automated water level controller with built-in dry-run protection, voltage surge safeguards, and automated reservoir monitoring for agricultural pump sets.",
-        "image": "https://imgs.search.brave.com/Z9E2ZnuKdO9vRZ6kWLew3QqpXTW9QrTsTq916IOCiE8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly92aWRl/b24uaW4vaW1hZ2Vz/L3dhdGVyLWxldmVs/LWNvbnRyb2xsZXIv/dGhyZWUxLmpwZw",
+        "image": "src/images/water-level-controller.png",
         "featured": true,
         "status": "available"
     },
@@ -78,7 +78,7 @@ const FALLBACK_PRODUCTS = [
         "categoryColor": "bg-purple-500",
         "badgeColor": "green",
         "description": "Intelligent automated multi-stage pressure booster pump systems that ensure constant, high-pressure water delivery across luxury villas, hotels, and commercial buildings.",
-        "image": "https://imgs.search.brave.com/32Eb1ZWINt9_d2mjuLurynh6wpwnP7Xi49GWUdud01E/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTFTdXFxK2ZkMkwu/anBn",
+        "image": "src/images/pressure-boosters.png",
         "featured": true,
         "status": "available"
     }
