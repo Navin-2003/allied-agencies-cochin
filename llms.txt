@@ -1,0 +1,42 @@
+# Allied Agencies Cochin
+
+> Authorized distributor and dealer of premier water pumps, motors, and pumping solutions in Kochi, Kerala since 1973.
+
+Allied Agencies Cochin is a leading consultant and supplier of domestic, agricultural, and industrial water management equipment located in Thrippunithura, Ernakulam, Kerala. Authorized distributor for Kirloskar, Texmo, V-Guard, KSB, and Wilo.
+
+## Business Details
+- **Company Name**: Allied Agencies Cochin
+- **Alternate Names**: Allied Agencies, Allied Agencies Thrippunithura
+- **Founded**: 1973 (50+ years of engineering excellence)
+- **Address**: Mukkadackal Buildings, Hill Palace Rd, Thrippunithura, Kochi, Kerala 682301, India
+- **Phone**: +91 94959 77454
+- **Email**: sales@alliedcochin.com / andrewsallied@gmail.com
+- **Website**: https://alliedagenciescochin.in
+- **Operating Hours**: Monday to Saturday, 10:00 AM – 7:00 PM IST (Closed Sundays)
+- **Coordinates**: 9.9466988° N, 76.352489° E
+
+## Authorized Brands
+- **Kirloskar Brothers Limited**: Premium domestic open-well submersibles, monoblocks, and industrial centrifugal pumps.
+- **Texmo Industries (Taro Pumps)**: High-performance agricultural and domestic borewell submersible pumps.
+- **V-Guard Industries**: Domestic self-priming, regenerative, and booster pump sets.
+- **KSB Pumps**: Heavy-duty industrial fluid transmission and wastewater drainage pumps.
+- **Wilo**: Advanced commercial pressure boosting systems.
+- **Sri Ellai Laxmi**: Agricultural irrigation and domestic monoblock systems.
+
+## Product Portfolio
+1. **Domestic Submersible Pumps**: Multi-stage pumps engineered for open wells, borewells, and residential overhead storage systems.
+2. **Self-Priming Monoblock Pumps**: Compact high-suction regenerative monoblocks for municipal line suction and household pressure boosting.
+3. **Centrifugal Industrial Pumps**: Heavy-duty continuous duty fluid transmission, HVAC circulation, cooling towers, and factory operations.
+4. **Sewage & Effluent Drainage Pumps**: Submersible cutter and vortex pumps for stormwater dewatering, commercial basements, and wastewater networks.
+5. **Agricultural Monoblock Pumps**: High-discharge open-well pumps designed for farm hydration, canal lifting, and irrigation networks.
+6. **Automated Water Level Controllers**: Microcontroller-based units with dry-run protection, surge protection, and automated reservoir monitoring.
+7. **Multi-Stage Pressure Booster Systems**: Automated constant pressure boosting for luxury villas, apartments, hotels, and commercial buildings.
+
+## Key Links & Resources
+- **Website Home**: https://alliedagenciescochin.in/
+- **Product Catalog**: https://alliedagenciescochin.in/#products
+- **WhatsApp Support**: https://wa.me/919495977454
+- **Store Location (Google Maps)**: https://maps.google.com/?q=9.9466988,76.352489
+- **Structured Data API (Products)**: https://alliedagenciescochin.in/src/data/products.json
+- **Structured Data API (Brands)**: https://alliedagenciescochin.in/src/data/brands.json
+- **Structured Data API (Contact)**: https://alliedagenciescochin.in/src/data/contact.json

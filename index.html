@@ -32,6 +32,9 @@
     <!-- Canonical URL Link -->
     <link rel="canonical" href="https://alliedagenciescochin.in/">
     
+    <!-- AI Agentic Browsing Metadata -->
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM Agent Context">
+    
     <!-- Favicon & Touch Icons (Google Search & Multi-Device Optimized) -->
     <link rel="icon" type="image/svg+xml" href="src/images/favicons/favicon.svg">
     <link rel="icon" type="image/png" sizes="48x48" href="src/images/favicons/favicon-48x48.png">
@@ -42,10 +45,15 @@
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="manifest" href="site.webmanifest">
     
-    <!-- Resource Hints & Above-The-Fold Preloads -->
+    <!-- Font Preconnections & Non-blocking Stylesheet -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1920&q=80" as="image">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap">
+    
+    <!-- Resource Hints & Above-The-Fold Responsive Preloads -->
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="preload" href="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=800&q=60" as="image" media="(max-width: 768px)" fetchpriority="high">
+    <link rel="preload" href="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1920&q=75" as="image" media="(min-width: 769px)" fetchpriority="high">
     
     <!-- Structured Data (JSON-LD LocalBusiness Schema) -->
     <script type="application/ld+json">
@@ -127,6 +135,9 @@
 </head>
 <body>
     
+    <!-- Accessibility Skip Link -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
     <!-- Main Header & Navigation -->
     <header>
         <nav id="navbar" class="transparent">
@@ -144,8 +155,8 @@
                     <li><a href="#contact" id="nav-link-contact">Contact</a></li>
                 </ul>
                 
-                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open mobile navigation drawer" aria-expanded="false" aria-controls="mobile-menu">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-label="Open mobile navigation drawer" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                 </button>
@@ -155,8 +166,8 @@
 
     <!-- Mobile Navigation Overlay Drawer -->
     <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
-        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close mobile navigation drawer">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+        <button class="mobile-menu-close" id="mobile-menu-close" type="button" aria-label="Close mobile navigation drawer">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
         </button>
@@ -169,12 +180,12 @@
 
     <!-- WhatsApp Floating Action Button Widget -->
     <a href="https://wa.me/919495977454" class="whatsapp-float" id="whatsapp-float-widget" target="_blank" rel="noopener noreferrer" aria-label="Chat with Allied Agencies on WhatsApp">
-        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.063-1.03-.069-.232-.08-1.034-.404-1.956-1.223-.719-.637-1.203-1.427-1.345-1.667-.142-.24-.015-.371.106-.49.109-.107.24-.282.361-.421.121-.14.161-.24.241-.401.081-.162.04-.303-.02-.422s-.524-1.262-.718-1.73c-.19-.459-.382-.396-.525-.404l-.447-.008c-.154 0-.405.058-.616.288-.212.23-.807.788-.807 1.921 0 1.133.824 2.226.938 2.384.115.157 1.623 2.478 3.931 3.477.549.238.977.38 1.312.487.551.175 1.053.15 1.45.09.444-.066 1.366-.559 1.557-1.097.19-.539.19-1.001.134-1.097-.057-.096-.207-.152-.444-.271zM12 2.182C6.585 2.182 2.182 6.585 2.182 12c0 1.833.502 3.553 1.374 5.027l-1.45 5.305 5.441-1.427A9.762 9.762 0 0012 21.818c5.415 0 9.818-4.403 9.818-9.818s-4.403-9.818-9.818-9.818zM12 20c-1.554 0-3.047-.406-4.35-1.176l-.312-.184-3.232.848.862-3.15-.202-.322A7.947 7.947 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
         </svg>
     </a>
 
-    <main>
+    <main id="main">
         
         <!-- Hero Section -->
         <section id="home" class="hero">
@@ -253,9 +264,9 @@
 
                 <!-- Load More Pagination -->
                 <div class="reveal" id="load-more-container" style="text-align: center; margin-top: 48px; display: none;">
-                    <button class="btn btn-secondary" id="load-more-btn" aria-label="Load more products from our catalog">
+                    <button class="btn btn-secondary" id="load-more-btn" type="button" aria-label="Load more products from our catalog">
                         Load More Products
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px; transition: transform 0.3s;" id="load-more-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px; transition: transform 0.3s;" id="load-more-icon" aria-hidden="true">
                             <path d="M12 5v14M5 12h14"/>
                         </svg>
                     </button>
@@ -308,9 +319,13 @@
                     </div>
                     <iframe 
                         id="contact-map"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.843463094383!2d76.34906435714718!3d9.946979262202058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b08736fb5d50c73%3A0xe4a9dbcb890ad55f!2sAllied%20Agencies%20Cochin!5e0!3m2!1sen!2sin!4v1769162231967" 
+                        data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.843463094383!2d76.34906435714718!3d9.946979262202058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b08736fb5d50c73%3A0xe4a9dbcb890ad55f!2sAllied%20Agencies%20Cochin!5e0!3m2!1sen!2sin!4v1769162231967" 
+                        src="about:blank"
                         allowfullscreen 
                         loading="lazy"
+                        width="100%"
+                        height="450"
+                        style="border:0;"
                         title="Allied Agencies Cochin Store Location Map">
                     </iframe>
                 </div>
@@ -328,4 +343,3 @@
 
 </body>
 </html>
-

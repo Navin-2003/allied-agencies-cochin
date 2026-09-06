@@ -1,7 +1,7 @@
-
 User-agent: *
 Disallow: /admin.html
+Disallow: /server.js
 Allow: /
 
-# Sitemap Location
+# Sitemap & Machine-Readable LLM Discovery
 Sitemap: https://alliedagenciescochin.in/sitemap.xml

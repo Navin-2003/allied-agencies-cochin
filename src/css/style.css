@@ -1,7 +1,5 @@
 /* Allied Agencies Cochin - Modern Premium Stylesheet */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap');
-
 /* CSS Custom Properties & Core Variables */
 :root {
     /* Harmonized Premium HSL Color Palette */
@@ -62,20 +60,36 @@ html {
     scrollbar-color: var(--text-light) var(--bg);
 }
 
+/* Accessibility: Skip to Content Link */
+.skip-link {
+    position: absolute;
+    top: -60px;
+    left: 20px;
+    background: var(--primary);
+    color: var(--white);
+    padding: 12px 20px;
+    z-index: 9999;
+    border-radius: var(--border-radius-xs);
+    font-weight: 700;
+    text-decoration: none;
+    transition: top 0.2s ease-in-out;
+    box-shadow: var(--shadow-md);
+}
+
+.skip-link:focus {
+    top: 20px;
+    outline: 3px solid var(--secondary);
+}
+
 body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     color: var(--text);
     background-color: var(--bg);
     line-height: 1.65;
     overflow-x: hidden;
-    opacity: 0;
-    transition: opacity 0.4s ease-out;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-body.loaded {
-    opacity: 1;
+    text-rendering: optimizeLegibility;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -526,6 +540,12 @@ nav.scrolled.transparent .mobile-menu-btn svg {
    ========================================================================== */
 section {
     padding: 90px 0;
+}
+
+/* Off-screen DOM rendering optimization for Mobile Web Vitals */
+.about, .brands, .products, .contact {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 500px;
 }
 
 .section-header {
@@ -1162,6 +1182,8 @@ footer p {
         min-height: 100vh;
         min-height: 100dvh;
         padding: 80px 0 50px;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(10, 18, 36, 0.82) 50%, rgba(15, 23, 42, 0.92) 100%), 
+                    url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=800&q=60') center/cover no-repeat;
     }
 
     .hero-content {

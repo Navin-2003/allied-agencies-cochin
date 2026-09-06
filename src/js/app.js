@@ -303,7 +303,7 @@ function initBrandsMarquee() {
         const name = escapeHTML(brand.name);
         return `
             <div class="partner-card">
-                <img src="${logoUrl}" alt="${name}" class="brand-logo" loading="lazy" onerror="this.onerror=null; this.parentElement.style.opacity='0.6';">
+                <img src="${logoUrl}" alt="${name} Logo" class="brand-logo" width="160" height="60" loading="lazy" onerror="this.onerror=null; this.parentElement.style.opacity='0.6';">
             </div>
         `;
     }).join('');
@@ -330,7 +330,7 @@ function initProductGallery() {
         const escapedCat = escapeHTML(cat);
         const escapedId = escapeHTML(cat.toLowerCase().replace(/[^a-z0-9]/g, '-'));
         return `
-            <button class="filter-btn ${cat === 'All' ? 'active' : ''}" data-category="${escapedCat}" id="filter-btn-${escapedId}">
+            <button class="filter-btn ${cat === 'All' ? 'active' : ''}" data-category="${escapedCat}" id="filter-btn-${escapedId}" type="button">
                 ${escapedCat}
             </button>
         `;
@@ -381,7 +381,7 @@ function initProductGallery() {
             return `
                 <div class="product-card reveal">
                     <div class="product-image">
-                        <img src="${imageSrc}" alt="${name}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=60';">
+                        <img src="${imageSrc}" alt="${name}" width="400" height="300" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=60';">
                         <span class="product-category ${catColor}">${cat}</span>
                     </div>
                     <div class="product-content">
@@ -396,7 +396,7 @@ function initProductGallery() {
                                id="product-link-${id}"
                                aria-label="Inquire about ${name} on WhatsApp">
                                 Inquire
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <path d="M5 12h14M12 5l7 7-7 7"/>
                                 </svg>
                             </a>
@@ -452,7 +452,7 @@ function initContactInfo() {
 }
 
 /**
- * Deferred Map Loading
+ * Deferred Map Loading via IntersectionObserver
  */
 function initDeferredMap() {
     const mapContainer = document.querySelector('.map-container');
@@ -461,26 +461,38 @@ function initDeferredMap() {
 
     if (!mapContainer || !mapFrame || !placeholder) return;
 
-    const mapObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                if (contact.mapEmbedUrl) {
-                    mapFrame.setAttribute('src', contact.mapEmbedUrl);
-                }
-                mapObserver.unobserve(mapContainer);
-            }
-        });
-    }, { rootMargin: '100px 0px' });
-
-    mapObserver.observe(mapContainer);
-
     mapFrame.addEventListener('load', () => {
-        placeholder.classList.add('hidden');
-        mapFrame.classList.add('loaded');
-        setTimeout(() => {
-            placeholder.style.display = 'none';
-        }, 800);
+        if (mapFrame.src && mapFrame.src !== 'about:blank') {
+            placeholder.classList.add('hidden');
+            mapFrame.classList.add('loaded');
+            setTimeout(() => {
+                placeholder.style.display = 'none';
+            }, 600);
+        }
     });
+
+    const loadMapSrc = () => {
+        const dataSrc = mapFrame.getAttribute('data-src');
+        if (dataSrc && (!mapFrame.src || mapFrame.src === 'about:blank' || mapFrame.src.endsWith('about:blank'))) {
+            mapFrame.src = dataSrc;
+        }
+    };
+
+    if ('IntersectionObserver' in window) {
+        const mapObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    loadMapSrc();
+                    mapObserver.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '300px' });
+
+        mapObserver.observe(mapContainer);
+    } else {
+        // Fallback for legacy environments
+        setTimeout(loadMapSrc, 2000);
+    }
 }
 
 // Bootstrap
@@ -497,6 +509,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     initContactInfo();
     initDeferredMap();
     initScrollReveal();
-
-    document.body.classList.add('loaded');
 });
